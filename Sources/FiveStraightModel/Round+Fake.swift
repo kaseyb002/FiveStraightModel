@@ -6,7 +6,7 @@ extension Round {
         started: Date = .now,
         players: [Player] = [
             .fake(id: "p1", name: "Player 1", chipColor: .blue),
-            .fake(id: "p2", name: "Player 2", chipColor: .green),
+            .fake(id: "p2", name: "Player 2", chipColor: .yellow),
         ],
         cookedDeck: Deck? = nil,
         board: Board = .standard()

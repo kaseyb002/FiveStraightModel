@@ -17,7 +17,7 @@ import Testing
 @Test func initThreePlayers() throws {
     let players: [Player] = [
         .fake(id: "p1", name: "Alice", chipColor: .blue),
-        .fake(id: "p2", name: "Bob", chipColor: .green),
+        .fake(id: "p2", name: "Bob", chipColor: .yellow),
         .fake(id: "p3", name: "Charlie", chipColor: .red),
     ]
     let round: Round = try Round(players: players)
@@ -29,9 +29,9 @@ import Testing
 @Test func initFourPlayers() throws {
     let players: [Player] = [
         .fake(id: "p1", name: "Alice", chipColor: .blue),
-        .fake(id: "p2", name: "Bob", chipColor: .green),
+        .fake(id: "p2", name: "Bob", chipColor: .yellow),
         .fake(id: "p3", name: "Charlie", chipColor: .blue),
-        .fake(id: "p4", name: "Diana", chipColor: .green),
+        .fake(id: "p4", name: "Diana", chipColor: .yellow),
     ]
     let round: Round = try Round(players: players)
     #expect(round.playerHands.count == 4)
@@ -42,10 +42,10 @@ import Testing
 @Test func initSixPlayersThreeTeams() throws {
     let players: [Player] = [
         .fake(id: "p1", chipColor: .blue),
-        .fake(id: "p2", chipColor: .green),
+        .fake(id: "p2", chipColor: .yellow),
         .fake(id: "p3", chipColor: .red),
         .fake(id: "p4", chipColor: .blue),
-        .fake(id: "p5", chipColor: .green),
+        .fake(id: "p5", chipColor: .yellow),
         .fake(id: "p6", chipColor: .red),
     ]
     let round: Round = try Round(players: players)
@@ -56,9 +56,9 @@ import Testing
 @Test func initRejectsInvalidPlayerCount() throws {
     let players: [Player] = [
         .fake(id: "p1", chipColor: .blue),
-        .fake(id: "p2", chipColor: .green),
+        .fake(id: "p2", chipColor: .yellow),
         .fake(id: "p3", chipColor: .blue),
-        .fake(id: "p4", chipColor: .green),
+        .fake(id: "p4", chipColor: .yellow),
         .fake(id: "p5", chipColor: .blue),
     ]
     #expect(throws: FiveStraightModelError.invalidPlayerCount) {
@@ -69,7 +69,7 @@ import Testing
 @Test func initRejectsUnequalTeams() throws {
     let players: [Player] = [
         .fake(id: "p1", chipColor: .blue),
-        .fake(id: "p2", chipColor: .green),
+        .fake(id: "p2", chipColor: .yellow),
         .fake(id: "p3", chipColor: .blue),
         .fake(id: "p4", chipColor: .blue),
     ]
@@ -252,7 +252,7 @@ import Testing
     var round: Round = try Round.fake(cookedDeck: deck)
 
     let targetSpace: BoardSpaceID = 15
-    round.board.placeChip(at: targetSpace, color: .green)
+    round.board.placeChip(at: targetSpace, color: .yellow)
 
     let p1ID: PlayerID = round.currentPlayerID!
     let hand: PlayerHand = round.playerHand(for: p1ID)!
@@ -304,7 +304,7 @@ import Testing
     let face: CardFace = CardFace(rank: card.rank, suit: card.suit)
     let matchingSpaces: [BoardSpace] = round.board.spaces(matching: face)
     for space: BoardSpace in matchingSpaces {
-        round.board.placeChip(at: space.id, color: .green)
+        round.board.placeChip(at: space.id, color: .yellow)
     }
 
     #expect(round.board.isCardDead(card) == true)
@@ -357,7 +357,7 @@ import Testing
     var round: Round = try Round.fake()
 
     round.board.placeChip(at: 1, color: .blue)
-    round.board.placeChip(at: 2, color: .green)
+    round.board.placeChip(at: 2, color: .yellow)
     round.board.placeChip(at: 3, color: .blue)
     round.board.placeChip(at: 4, color: .blue)
     round.board.placeChip(at: 5, color: .blue)
@@ -393,7 +393,7 @@ import Testing
 @Test func threeTeamGameNeedsOneSequence() throws {
     let players: [Player] = [
         .fake(id: "p1", chipColor: .blue),
-        .fake(id: "p2", chipColor: .green),
+        .fake(id: "p2", chipColor: .yellow),
         .fake(id: "p3", chipColor: .red),
     ]
     var round: Round = try Round(players: players)
@@ -416,11 +416,11 @@ import Testing
 
     var round: Round = try Round.fake(cookedDeck: deck)
 
-    round.board.placeChip(at: 1, color: .green)
-    round.board.placeChip(at: 2, color: .green)
-    round.board.placeChip(at: 3, color: .green)
-    round.board.placeChip(at: 4, color: .green)
-    round.checkForNewSequences(color: .green, at: 4)
+    round.board.placeChip(at: 1, color: .yellow)
+    round.board.placeChip(at: 2, color: .yellow)
+    round.board.placeChip(at: 3, color: .yellow)
+    round.board.placeChip(at: 4, color: .yellow)
+    round.checkForNewSequences(color: .yellow, at: 4)
     #expect(round.completedSequences.count == 1)
 
     let p1ID: PlayerID = round.currentPlayerID!

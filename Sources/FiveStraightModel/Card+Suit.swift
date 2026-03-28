@@ -26,5 +26,14 @@ extension Card {
             case .spade: return "Spades"
             }
         }
+        
+        public var sortValue: Int {
+            switch self {
+            case .heart: return 1
+            case .club: return 2
+            case .diamond: return 3
+            case .spade: return 4
+            }
+        }
     }
 }

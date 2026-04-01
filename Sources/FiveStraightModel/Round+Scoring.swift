@@ -4,8 +4,8 @@ extension Round {
 
     /// Check for newly completed sequences after placing a chip at the given space.
     mutating func checkForNewSequences(color: ChipColor, at placedSpaceID: BoardSpaceID) {
-        let row: Int = placedSpaceID / Board.columns
-        let col: Int = placedSpaceID % Board.columns
+        let row: Int = placedSpaceID / board.columns
+        let col: Int = placedSpaceID % board.columns
 
         let directions: [(dr: Int, dc: Int)] = [
             (0, 1),   // horizontal
@@ -22,10 +22,10 @@ extension Round {
                 let endRow: Int = startRow + direction.dr * 4
                 let endCol: Int = startCol + direction.dc * 4
 
-                guard startRow >= 0, startRow < Board.rows,
-                      startCol >= 0, startCol < Board.columns,
-                      endRow >= 0, endRow < Board.rows,
-                      endCol >= 0, endCol < Board.columns
+                guard startRow >= 0, startRow < board.rows,
+                      startCol >= 0, startCol < board.columns,
+                      endRow >= 0, endRow < board.rows,
+                      endCol >= 0, endCol < board.columns
                 else { continue }
 
                 var spaceIDs: [BoardSpaceID] = []
@@ -34,7 +34,7 @@ extension Round {
                 for step: Int in 0..<5 {
                     let r: Int = startRow + direction.dr * step
                     let c: Int = startCol + direction.dc * step
-                    let spaceID: BoardSpaceID = r * Board.columns + c
+                    let spaceID: BoardSpaceID = r * board.columns + c
                     let space: BoardSpace = board.spaces[spaceID]
 
                     let isMatch: Bool = space.isFreeSpace || space.chip == color

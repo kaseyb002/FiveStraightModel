@@ -198,8 +198,8 @@ public struct AIEngine: Sendable {
         isWild: Bool
     ) -> Double {
         var score: Double = 0
-        let row: Int = spaceID / Board.columns
-        let col: Int = spaceID % Board.columns
+        let row: Int = spaceID / round.board.columns
+        let col: Int = spaceID % round.board.columns
 
         let directions: [(dr: Int, dc: Int)] = [(0, 1), (1, 0), (1, 1), (1, -1)]
 
@@ -236,8 +236,8 @@ public struct AIEngine: Sendable {
         let space: BoardSpace = round.board.spaces[spaceID]
         guard let opponentChip: ChipColor = space.chip else { return 0 }
 
-        let row: Int = spaceID / Board.columns
-        let col: Int = spaceID % Board.columns
+        let row: Int = spaceID / round.board.columns
+        let col: Int = spaceID % round.board.columns
         let directions: [(dr: Int, dc: Int)] = [(0, 1), (1, 0), (1, 1), (1, -1)]
 
         for dir in directions {
@@ -263,8 +263,8 @@ public struct AIEngine: Sendable {
 
     private func blockingBonus(round: Round, spaceID: BoardSpaceID, playerChip: ChipColor) -> Double {
         var bonus: Double = 0
-        let row: Int = spaceID / Board.columns
-        let col: Int = spaceID % Board.columns
+        let row: Int = spaceID / round.board.columns
+        let col: Int = spaceID % round.board.columns
         let directions: [(dr: Int, dc: Int)] = [(0, 1), (1, 0), (1, 1), (1, -1)]
 
         let opponentColors: [ChipColor] = round.teamColors.filter { $0 != playerChip }
@@ -296,8 +296,8 @@ public struct AIEngine: Sendable {
         let space: BoardSpace = round.board.spaces[spaceID]
         guard let opponentChip: ChipColor = space.chip else { return 0 }
 
-        let row: Int = spaceID / Board.columns
-        let col: Int = spaceID % Board.columns
+        let row: Int = spaceID / round.board.columns
+        let col: Int = spaceID % round.board.columns
         let directions: [(dr: Int, dc: Int)] = [(0, 1), (1, 0), (1, 1), (1, -1)]
 
         var bonus: Double = 0
@@ -324,8 +324,8 @@ public struct AIEngine: Sendable {
         spaceID: BoardSpaceID,
         chipColor: ChipColor
     ) -> Double {
-        let row: Int = spaceID / Board.columns
-        let col: Int = spaceID % Board.columns
+        let row: Int = spaceID / round.board.columns
+        let col: Int = spaceID % round.board.columns
         let directions: [(dr: Int, dc: Int)] = [(0, 1), (1, 0), (1, 1), (1, -1)]
 
         var directionsWithRuns: Int = 0
@@ -362,8 +362,8 @@ public struct AIEngine: Sendable {
         for step: Int in 1..<5 {
             let r: Int = row + dr * step
             let c: Int = col + dc * step
-            guard r >= 0, r < Board.rows, c >= 0, c < Board.columns else { break }
-            let space: BoardSpace = round.board.spaces[r * Board.columns + c]
+            guard r >= 0, r < round.board.rows, c >= 0, c < round.board.columns else { break }
+            let space: BoardSpace = round.board.spaces[r * round.board.columns + c]
             if space.isFreeSpace || space.chip == chipColor {
                 count += 1
             } else {
@@ -375,8 +375,8 @@ public struct AIEngine: Sendable {
         for step: Int in 1..<5 {
             let r: Int = row - dr * step
             let c: Int = col - dc * step
-            guard r >= 0, r < Board.rows, c >= 0, c < Board.columns else { break }
-            let space: BoardSpace = round.board.spaces[r * Board.columns + c]
+            guard r >= 0, r < round.board.rows, c >= 0, c < round.board.columns else { break }
+            let space: BoardSpace = round.board.spaces[r * round.board.columns + c]
             if space.isFreeSpace || space.chip == chipColor {
                 count += 1
             } else {

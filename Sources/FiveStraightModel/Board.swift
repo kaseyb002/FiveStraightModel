@@ -1,18 +1,33 @@
 import Foundation
 
 public struct Board: Equatable, Codable, Sendable {
-    public static let rows: Int = 10
-    public static let columns: Int = 10
-    public static let size: Int = 100
-
     public var spaces: [BoardSpace]
+
+    /// Row and column counts are derived from the maximum `BoardSpace` coordinates (inclusive grid).
+    private var gridExtent: (rows: Int, columns: Int) {
+        guard spaces.isEmpty == false else { return (0, 0) }
+        var maxRow: Int = 0
+        var maxCol: Int = 0
+        for space in spaces {
+            if space.row > maxRow { maxRow = space.row }
+            if space.column > maxCol { maxCol = space.column }
+        }
+        return (maxRow + 1, maxCol + 1)
+    }
+
+    public var rows: Int { gridExtent.rows }
+    public var columns: Int { gridExtent.columns }
+    public var size: Int {
+        let extent: (rows: Int, columns: Int) = gridExtent
+        return extent.rows * extent.columns
+    }
 
     public init(spaces: [BoardSpace]) {
         self.spaces = spaces
     }
 
     public func space(at row: Int, column: Int) -> BoardSpace? {
-        let id: Int = row * Self.columns + column
+        let id: Int = row * columns + column
         guard id >= 0, id < spaces.count else { return nil }
         return spaces[id]
     }
@@ -69,10 +84,11 @@ public struct Board: Equatable, Codable, Sendable {
             nil,  "ad", "kd", "qd", "td", "9d", "8d", "7d", "6d", nil,
         ]
 
+        let columnCount: Int = 10
         var spaces: [BoardSpace] = []
         for (index, faceStr) in layout.enumerated() {
-            let row: Int = index / columns
-            let column: Int = index % columns
+            let row: Int = index / columnCount
+            let column: Int = index % columnCount
             let cardFace: CardFace? = faceStr.flatMap { CardFace(faceId: $0) }
             spaces.append(BoardSpace(
                 id: index,
